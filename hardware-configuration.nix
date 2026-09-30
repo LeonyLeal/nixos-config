@@ -13,14 +13,16 @@
 #
 # EFI:
 #   UUID=4987-B75B
-
-{ config, lib, pkgs, modulesPath, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
-
 
   # ============================================================
   # INITRD
@@ -34,10 +36,8 @@
     "sd_mod"
   ];
 
-
   boot.initrd.kernelModules = [
   ];
-
 
   # ============================================================
   # KERNEL
@@ -47,41 +47,33 @@
     "kvm-intel"
   ];
 
-
   boot.extraModulePackages = [
   ];
-
 
   # ============================================================
   # ROOT
   # ============================================================
 
   fileSystems."/" = {
-    device =
-      "/dev/disk/by-uuid/e94a0e96-2453-47d9-9369-638602758914";
+    device = "/dev/disk/by-uuid/e94a0e96-2453-47d9-9369-638602758914";
 
-    fsType =
-      "ext4";
+    fsType = "ext4";
   };
-
 
   # ============================================================
   # EFI
   # ============================================================
 
   fileSystems."/boot" = {
-    device =
-      "/dev/disk/by-uuid/4987-B75B";
+    device = "/dev/disk/by-uuid/4987-B75B";
 
-    fsType =
-      "vfat";
+    fsType = "vfat";
 
     options = [
       "fmask=0022"
       "dmask=0022"
     ];
   };
-
 
   # ============================================================
   # SWAP
@@ -90,14 +82,12 @@
   swapDevices = [
   ];
 
-
   # ============================================================
   # NETWORK
   # ============================================================
 
   networking.useDHCP =
     lib.mkDefault true;
-
 
   # ============================================================
   # PLATFORM
@@ -106,12 +96,11 @@
   nixpkgs.hostPlatform =
     lib.mkDefault "x86_64-linux";
 
-
   # ============================================================
   # MICROCODE
   # ============================================================
 
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault
-      config.hardware.enableRedistributableFirmware;
+    config.hardware.enableRedistributableFirmware;
 }

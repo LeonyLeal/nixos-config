@@ -4,9 +4,7 @@
   pkgsUnstable,
   dms,
   ...
-}:
-
-{
+}: {
   # ============================================================
   # GRAPHICS
   # ============================================================
@@ -19,7 +17,6 @@
       true;
   };
 
-
   # ============================================================
   # NVIDIA RTX 4060
   # ============================================================
@@ -27,7 +24,6 @@
   services.xserver.videoDrivers = [
     "nvidia"
   ];
-
 
   hardware.nvidia = {
     modesetting.enable =
@@ -46,7 +42,6 @@
       config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-
   # ============================================================
   # FONTS
   # ============================================================
@@ -54,13 +49,12 @@
   fonts.fontconfig.enable =
     true;
 
-
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
-
+    nerd-fonts.meslo-lg
+    nerd-fonts.fira-code
     noto-fonts-color-emoji
   ];
-
 
   # ============================================================
   # HYPRLAND
@@ -77,7 +71,6 @@
       true;
   };
 
-
   # ============================================================
   # DANK MATERIAL SHELL
   # ============================================================
@@ -86,14 +79,11 @@
     enable =
       true;
 
-
     package =
       dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-
     systemd.enable =
       false;
-
 
     enableSystemMonitoring =
       true;
@@ -114,7 +104,6 @@
       true;
   };
 
-
   # ============================================================
   # DANK GREETER
   # ============================================================
@@ -123,13 +112,10 @@
     enable =
       true;
 
-    compositor.name =
-      "hyprland";
+    compositor.name = "hyprland";
 
-    configHome =
-      "/home/z30n";
+    configHome = "/home/z30n";
   };
-
 
   # ============================================================
   # THUNAR
@@ -138,14 +124,11 @@
   programs.thunar.enable =
     true;
 
-
   services.gvfs.enable =
     true;
 
-
   services.tumbler.enable =
     true;
-
 
   # ============================================================
   # POLKIT
@@ -154,16 +137,13 @@
   security.polkit.enable =
     true;
 
-
   # ============================================================
   # WAYLAND
   # ============================================================
 
   environment.sessionVariables = {
-    NIXOS_OZONE_WL =
-      "1";
+    NIXOS_OZONE_WL = "1";
   };
-
 
   # ============================================================
   # AUDIO
@@ -172,10 +152,8 @@
   services.pulseaudio.enable =
     false;
 
-
   security.rtkit.enable =
     true;
-
 
   services.pipewire = {
     enable =
@@ -191,14 +169,12 @@
       true;
   };
 
-
   # ============================================================
   # PRINTING
   # ============================================================
 
   services.printing.enable =
     true;
-
 
   # ============================================================
   # DESKTOP PACKAGES
@@ -226,7 +202,6 @@
 
       xdg-user-dirs
 
-
       # Wayland
 
       wl-clipboard
@@ -234,7 +209,6 @@
       grim
 
       slurp
-
 
       # Multimedia
 
@@ -244,9 +218,7 @@
 
       brightnessctl
     ])
-
     ++ [
-
       # ========================================================
       # KITTY RECENTE
       # ========================================================

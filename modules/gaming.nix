@@ -1,13 +1,10 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   # ============================================================
   # STEAM
   # ============================================================
 
   programs.steam.enable =
     true;
-
 
   # ============================================================
   # GAMESCOPE
@@ -18,7 +15,6 @@
 
     capSysNice = true;
   };
-
 
   # ============================================================
   # GAMEMODE
@@ -31,23 +27,19 @@
     enableRenice = false;
   };
 
-
   # ============================================================
   # GAMING PACKAGES
   # ============================================================
 
   environment.systemPackages = with pkgs; [
-
     # Epic / GOG / Amazon.
     (heroic.override {
-      extraPkgs =
-        pkgs':
-          with pkgs'; [
-            gamescope
-            gamemode
-          ];
+      extraPkgs = pkgs':
+        with pkgs'; [
+          gamescope
+          gamemode
+        ];
     })
-
 
     # Gerencia Proton-GE.
     protonup-qt

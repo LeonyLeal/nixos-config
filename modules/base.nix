@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   # ============================================================
   # NIX
   # ============================================================
@@ -10,30 +8,23 @@
     "flakes"
   ];
 
-
   # ============================================================
   # HOST
   # ============================================================
 
-  networking.hostName =
-    "nixos";
-
+  networking.hostName = "nixos";
 
   # ============================================================
   # TIMEZONE
   # ============================================================
 
-  time.timeZone =
-    "America/Sao_Paulo";
-
+  time.timeZone = "America/Sao_Paulo";
 
   # ============================================================
   # LOCALE
   # ============================================================
 
-  i18n.defaultLocale =
-    "pt_BR.UTF-8";
-
+  i18n.defaultLocale = "pt_BR.UTF-8";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pt_BR.UTF-8";
@@ -47,10 +38,7 @@
     LC_TIME = "pt_BR.UTF-8";
   };
 
-
-  console.keyMap =
-    "br-abnt2";
-
+  console.keyMap = "br-abnt2";
 
   # ============================================================
   # ZSH
@@ -59,12 +47,10 @@
   programs.zsh.enable =
     true;
 
-
   # Permite completion de programas do sistema.
   environment.pathsToLink = [
     "/share/zsh"
   ];
-
 
   # ============================================================
   # USER
@@ -74,13 +60,10 @@
     isNormalUser =
       true;
 
-    description =
-      "Z30N";
-
+    description = "Z30N";
 
     shell =
       pkgs.zsh;
-
 
     extraGroups = [
       "networkmanager"
@@ -89,7 +72,6 @@
     ];
   };
 
-
   # ============================================================
   # PROGRAMS
   # ============================================================
@@ -97,15 +79,12 @@
   programs.firefox.enable =
     true;
 
-
   programs.git.enable =
     true;
-
 
   # ============================================================
   # NIXOS
   # ============================================================
 
-  system.stateVersion =
-    "26.05";
+  system.stateVersion = "26.05";
 }

@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   # ============================================================
   # NETWORK MANAGER
   # ============================================================
@@ -8,12 +6,10 @@
   networking.networkmanager = {
     enable = true;
 
-
     plugins = [
       pkgs.networkmanager-openconnect
     ];
   };
-
 
   # ============================================================
   # GLOBALPROTECT
@@ -22,13 +18,11 @@
   programs.globalprotect-openconnect.enable =
     true;
 
-
   # ============================================================
   # NETWORK / DIAGNOSTIC TOOLS
   # ============================================================
 
   environment.systemPackages = with pkgs; [
-
     # VPN
 
     wireguard-tools
@@ -36,7 +30,6 @@
     openconnect
 
     networkmanager-openconnect
-
 
     # Diagnostics
 
@@ -60,13 +53,11 @@
 
     traceroute
 
-
     # Hardware
 
     pciutils
 
     usbutils
-
 
     # Existing tools
 

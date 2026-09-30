@@ -1,11 +1,7 @@
-{ lib, ... }:
-
-let
-
+{lib, ...}: let
   # ============================================================
   # NVM
   # ============================================================
-
   nvmInit = ''
     export NVM_DIR="$HOME/.nvm"
 
@@ -24,9 +20,7 @@ let
 
     export PATH="$HOME/.dotnet/tools:$PATH"
   '';
-
-in
-{
+in {
   # ============================================================
   # PATH
   # ============================================================
@@ -37,7 +31,6 @@ in
     "$HOME/.dotnet/tools"
   ];
 
-
   # ============================================================
   # ALIASES
   # ============================================================
@@ -45,115 +38,78 @@ in
   home.shellAliases = {
     # Files
 
-    ll =
-      "eza -lah --group-directories-first --icons=auto";
+    ll = "eza -lah --group-directories-first --icons=auto";
 
-    la =
-      "eza -la --group-directories-first --icons=auto";
+    la = "eza -la --group-directories-first --icons=auto";
 
-    tree =
-      "eza --tree --icons=auto";
+    tree = "eza --tree --icons=auto";
 
-    cat =
-      "bat --paging=never";
-
+    cat = "bat --paging=never";
 
     # Git
 
-    gs =
-      "git status";
+    gs = "git status";
 
-    ga =
-      "git add";
+    ga = "git add";
 
-    gc =
-      "git commit";
+    gc = "git commit";
 
-    gp =
-      "git push";
+    gp = "git push";
 
-    gl =
-      "git log --oneline --graph --decorate";
+    gl = "git log --oneline --graph --decorate";
 
-    lg =
-      "lazygit";
-
+    lg = "lazygit";
 
     # Docker
 
-    dc =
-      "docker compose";
+    dc = "docker compose";
 
-    dps =
-      "docker ps";
+    dps = "docker ps";
 
-    dcu =
-      "docker compose up -d";
+    dcu = "docker compose up -d";
 
-    dcd =
-      "docker compose down";
+    dcd = "docker compose down";
 
-    lzd =
-      "lazydocker";
-
+    lzd = "lazydocker";
 
     # .NET
 
-    dotnets =
-      "dotnet --list-sdks";
-
+    dotnets = "dotnet --list-sdks";
 
     # Python
 
-    py =
-      "python";
+    py = "python";
 
-    venv =
-      "python -m venv .venv";
-
+    venv = "python -m venv .venv";
 
     # NixOS
 
-    nrs =
-      "nh os switch";
+    nrs = "nh os switch";
 
-    nrb =
-      "nh os build";
+    nrb = "nh os build";
 
-    nrt =
-      "nh os test";
-
+    nrt = "nh os test";
 
     # Nix lint
 
-    nixfmtall =
-      "alejandra /etc/nixos";
+    nixfmtall = "alejandra /etc/nixos";
 
-    nixlint =
-      "statix check /etc/nixos && deadnix /etc/nixos";
-
+    nixlint = "statix check /etc/nixos && deadnix /etc/nixos";
 
     # Journal
 
-    jerr =
-      "journalctl -p err -b";
+    jerr = "journalctl -p err -b";
 
-    jboot =
-      "journalctl -b";
+    jboot = "journalctl -b";
 
-    jfollow =
-      "journalctl -f";
-
+    jfollow = "journalctl -f";
 
     # Restic
 
-    backup-now =
-      "sudo systemctl start restic-backups-nixos.service";
+    backup-now = "sudo systemctl start restic-backups-nixos.service";
 
-    backup-status =
-      "systemctl status restic-backups-nixos.service --no-pager";
+    backup-status = "systemctl status restic-backups-nixos.service --no-pager";
   };
-
 
   # ============================================================
   # BASH
@@ -173,7 +129,6 @@ in
       nvmInit;
   };
 
-
   # ============================================================
   # ZSH
   # ============================================================
@@ -182,14 +137,12 @@ in
     enable =
       true;
 
-
     # ----------------------------------------------------------
     # COMPLETION
     # ----------------------------------------------------------
 
     enableCompletion =
       true;
-
 
     # ----------------------------------------------------------
     # AUTO CD
@@ -198,14 +151,11 @@ in
     autocd =
       true;
 
-
     # ----------------------------------------------------------
     # KEYMAP
     # ----------------------------------------------------------
 
-    defaultKeymap =
-      "emacs";
-
+    defaultKeymap = "emacs";
 
     # ----------------------------------------------------------
     # AUTOSUGGESTIONS
@@ -220,10 +170,8 @@ in
         "completion"
       ];
 
-      highlight =
-        "fg=#3F6F3F";
+      highlight = "fg=#3F6F3F";
     };
-
 
     # ----------------------------------------------------------
     # SYNTAX HIGHLIGHTING
@@ -238,7 +186,6 @@ in
         "brackets"
       ];
     };
-
 
     # ----------------------------------------------------------
     # HISTORY
@@ -276,7 +223,6 @@ in
         true;
     };
 
-
     # ----------------------------------------------------------
     # HISTORY SEARCH
     # ----------------------------------------------------------
@@ -285,64 +231,59 @@ in
       enable =
         true;
 
-      searchUpKey =
-        "^[[A";
+      searchUpKey = "^[[A";
 
-      searchDownKey =
-        "^[[B";
+      searchDownKey = "^[[B";
     };
-
 
     # ----------------------------------------------------------
     # CUSTOM CONFIG
     # ----------------------------------------------------------
 
-    initContent =
-      lib.mkOrder 1000 ''
-        ${nvmInit}
+    initContent = lib.mkOrder 1000 ''
+      ${nvmInit}
 
 
-        # ======================================================
-        # COMPLETION
-        # ======================================================
+      # ======================================================
+      # COMPLETION
+      # ======================================================
 
-        zstyle ':completion:*' menu select
+      zstyle ':completion:*' menu select
 
-        zstyle ':completion:*' group-name ""
+      zstyle ':completion:*' group-name ""
 
-        zstyle ':completion:*' verbose yes
+      zstyle ':completion:*' verbose yes
 
-        zstyle ':completion:*' matcher-list \
-          'm:{a-zA-Z}={A-Za-z}' \
-          'r:|[._-]=* r:|=*'
-
-
-        # Mostrar descrições em verde.
-
-        zstyle ':completion:*:descriptions' \
-          format '%F{green}-- %d --%f'
+      zstyle ':completion:*' matcher-list \
+        'm:{a-zA-Z}={A-Za-z}' \
+        'r:|[._-]=* r:|=*'
 
 
-        # ======================================================
-        # KEYBINDS
-        # ======================================================
+      # Mostrar descrições em verde.
 
-        bindkey '^[[1;5C' forward-word
-
-        bindkey '^[[1;5D' backward-word
+      zstyle ':completion:*:descriptions' \
+        format '%F{green}-- %d --%f'
 
 
-        # Ctrl + Delete
+      # ======================================================
+      # KEYBINDS
+      # ======================================================
 
-        bindkey '^[[3;5~' kill-word
+      bindkey '^[[1;5C' forward-word
+
+      bindkey '^[[1;5D' backward-word
 
 
-        # Ctrl + Backspace
+      # Ctrl + Delete
 
-        bindkey '^H' backward-kill-word
-      '';
+      bindkey '^[[3;5~' kill-word
+
+
+      # Ctrl + Backspace
+
+      bindkey '^H' backward-kill-word
+    '';
   };
-
 
   # ============================================================
   # DIRENV

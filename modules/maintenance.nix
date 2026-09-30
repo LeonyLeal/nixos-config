@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   # ============================================================
   # NH
   # ============================================================
@@ -8,16 +6,13 @@
   programs.nh = {
     enable = true;
 
-
     # Permite:
     #
     # nh os switch
     # nh os build
     # nh os test
 
-    flake =
-      "/etc/nixos";
-
+    flake = "/etc/nixos";
 
     # ----------------------------------------------------------
     # AUTOMATIC CLEANUP
@@ -26,19 +21,16 @@
     clean = {
       enable = true;
 
-      dates =
-        "weekly";
+      dates = "weekly";
 
       # Mantém:
       #
       # - pelo menos 5 gerações
       # - gerações com menos de 30 dias
 
-      extraArgs =
-        "--keep 5 --keep-since 30d";
+      extraArgs = "--keep 5 --keep-since 30d";
     };
   };
-
 
   # ============================================================
   # STORE OPTIMISATION
@@ -52,7 +44,6 @@
     ];
   };
 
-
   # ============================================================
   # JOURNALD
   # ============================================================
@@ -63,14 +54,12 @@
     MaxRetentionSec=1month
   '';
 
-
   # ============================================================
   # SMART
   # ============================================================
 
   services.smartd.enable =
     true;
-
 
   # ============================================================
   # RESTIC
@@ -91,19 +80,13 @@
     initialize =
       true;
 
+    repository = "/var/lib/restic/nixos";
 
-    repository =
-      "/var/lib/restic/nixos";
-
-
-    passwordFile =
-      "/var/lib/restic/nixos-password";
-
+    passwordFile = "/var/lib/restic/nixos-password";
 
     paths = [
       "/etc/nixos"
     ];
-
 
     backupPrepareCommand = ''
       install -d -m 0700 /var/lib/restic
@@ -118,18 +101,14 @@
       chmod 0600 /var/lib/restic/nixos-password
     '';
 
-
     timerConfig = {
-      OnCalendar =
-        "daily";
+      OnCalendar = "daily";
 
       Persistent =
         true;
 
-      RandomizedDelaySec =
-        "30m";
+      RandomizedDelaySec = "30m";
     };
-
 
     pruneOpts = [
       "--keep-daily 7"
@@ -138,13 +117,11 @@
     ];
   };
 
-
   # ============================================================
   # SYSTEM TOOLS
   # ============================================================
 
   environment.systemPackages = with pkgs; [
-
     # ----------------------------------------------------------
     # NIX DEVELOPMENT
     # ----------------------------------------------------------
@@ -155,7 +132,6 @@
 
     deadnix
 
-
     # ----------------------------------------------------------
     # DOCKER
     # ----------------------------------------------------------
@@ -165,7 +141,6 @@
     dive
 
     ctop
-
 
     # ----------------------------------------------------------
     # MONITORING
@@ -187,7 +162,6 @@
 
     duf
 
-
     # ----------------------------------------------------------
     # HARDWARE
     # ----------------------------------------------------------
@@ -195,7 +169,6 @@
     smartmontools
 
     lm_sensors
-
 
     # ----------------------------------------------------------
     # BACKUP

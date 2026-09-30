@@ -1,14 +1,10 @@
-{ ... }:
-
-{
+{...}: {
   programs.ssh = {
     enable = true;
-
 
     # Evita defaults implícitos do HM.
     enableDefaultConfig =
       false;
-
 
     settings."*" = {
       # --------------------------------------------------------
@@ -18,18 +14,12 @@
       ForwardAgent =
         false;
 
-
-      AddKeysToAgent =
-        "yes";
-
+      AddKeysToAgent = "yes";
 
       HashKnownHosts =
         true;
 
-
-      UserKnownHostsFile =
-        "~/.ssh/known_hosts";
-
+      UserKnownHostsFile = "~/.ssh/known_hosts";
 
       # --------------------------------------------------------
       # CONNECTION
@@ -38,29 +28,21 @@
       Compression =
         true;
 
-
       ServerAliveInterval =
         60;
 
-
       ServerAliveCountMax =
         3;
-
 
       # --------------------------------------------------------
       # CONNECTION REUSE
       # --------------------------------------------------------
 
-      ControlMaster =
-        "auto";
+      ControlMaster = "auto";
 
+      ControlPath = "~/.ssh/master-%C";
 
-      ControlPath =
-        "~/.ssh/master-%C";
-
-
-      ControlPersist =
-        "10m";
+      ControlPersist = "10m";
     };
   };
 }

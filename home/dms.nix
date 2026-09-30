@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   # ============================================================
   # DMS - ÍNDICE DE ATALHOS
   # ============================================================
@@ -79,231 +77,218 @@
     bindd = ALT, Print, Capturar janela, exec, dms screenshot window
   '';
 
-
   # ============================================================
   # DMS - CHEAT SHEET
   # ============================================================
 
-  home.file.".config/DankMaterialShell/cheatsheets/z30n.json".text =
-    builtins.toJSON {
-      title = "Z30N Hyprland";
+  home.file.".config/DankMaterialShell/cheatsheets/z30n.json".text = builtins.toJSON {
+    title = "Z30N Hyprland";
 
-      provider = "z30n";
+    provider = "z30n";
 
-      binds = {
+    binds = {
+      "Aplicativos" = [
+        {
+          key = "Super + Enter";
+          desc = "Abrir Kitty";
+        }
+        {
+          key = "Super + E";
+          desc = "Abrir Thunar";
+        }
+        {
+          key = "Super + Space";
+          desc = "Launcher";
+        }
+        {
+          key = "Alt + Space";
+          desc = "Launcher compacto";
+        }
+      ];
 
-        "Aplicativos" = [
-          {
-            key = "Super + Enter";
-            desc = "Abrir Kitty";
-          }
-          {
-            key = "Super + E";
-            desc = "Abrir Thunar";
-          }
-          {
-            key = "Super + Space";
-            desc = "Launcher";
-          }
-          {
-            key = "Alt + Space";
-            desc = "Launcher compacto";
-          }
-        ];
+      "Teclado" = [
+        {
+          key = "Super + Shift + Space";
+          desc = "Alternar entre Português BR e Inglês US";
+        }
+      ];
 
+      "Janelas" = [
+        {
+          key = "Alt + Tab";
+          desc = "Próxima janela";
+        }
+        {
+          key = "Alt + Shift + Tab";
+          desc = "Janela anterior";
+        }
+        {
+          key = "Super + Q";
+          desc = "Fechar janela";
+        }
+        {
+          key = "Super + F";
+          desc = "Maximizar";
+        }
+        {
+          key = "Super + Shift + F";
+          desc = "Fullscreen";
+        }
+        {
+          key = "Super + Shift + T";
+          desc = "Floating";
+        }
+        {
+          key = "Super + mouse esquerdo";
+          desc = "Mover janela";
+        }
+        {
+          key = "Super + mouse direito";
+          desc = "Redimensionar janela";
+        }
+      ];
 
-        "Teclado" = [
-          {
-            key = "Super + Shift + Space";
-            desc = "Alternar entre Português BR e Inglês US";
-          }
-        ];
+      "Workspaces" = [
+        {
+          key = "Super + ←";
+          desc = "Workspace anterior";
+        }
+        {
+          key = "Super + →";
+          desc = "Próximo workspace";
+        }
+        {
+          key = "Super + Shift + ←";
+          desc = "Mover janela para workspace anterior";
+        }
+        {
+          key = "Super + Shift + →";
+          desc = "Mover janela para próximo workspace";
+        }
+        {
+          key = "Super + Tab";
+          desc = "Overview";
+        }
+        {
+          key = "Super + 1..0";
+          desc = "Ir para workspace";
+        }
+        {
+          key = "Super + Shift + 1..0";
+          desc = "Mover janela para workspace";
+        }
+      ];
 
+      "Foco" = [
+        {
+          key = "Super + H";
+          desc = "Foco esquerda";
+        }
+        {
+          key = "Super + J";
+          desc = "Foco baixo";
+        }
+        {
+          key = "Super + K";
+          desc = "Foco cima";
+        }
+        {
+          key = "Super + L";
+          desc = "Foco direita";
+        }
+      ];
 
-        "Janelas" = [
-          {
-            key = "Alt + Tab";
-            desc = "Próxima janela";
-          }
-          {
-            key = "Alt + Shift + Tab";
-            desc = "Janela anterior";
-          }
-          {
-            key = "Super + Q";
-            desc = "Fechar janela";
-          }
-          {
-            key = "Super + F";
-            desc = "Maximizar";
-          }
-          {
-            key = "Super + Shift + F";
-            desc = "Fullscreen";
-          }
-          {
-            key = "Super + Shift + T";
-            desc = "Floating";
-          }
-          {
-            key = "Super + mouse esquerdo";
-            desc = "Mover janela";
-          }
-          {
-            key = "Super + mouse direito";
-            desc = "Redimensionar janela";
-          }
-        ];
+      "Redimensionamento" = [
+        {
+          key = "Super + Ctrl + H";
+          desc = "Diminuir largura";
+        }
+        {
+          key = "Super + Ctrl + L";
+          desc = "Aumentar largura";
+        }
+        {
+          key = "Super + Ctrl + K";
+          desc = "Diminuir altura";
+        }
+        {
+          key = "Super + Ctrl + J";
+          desc = "Aumentar altura";
+        }
+      ];
 
+      "DMS" = [
+        {
+          key = "Super + ,";
+          desc = "Configurações";
+        }
+        {
+          key = "Super + N";
+          desc = "Notificações";
+        }
+        {
+          key = "Super + Shift + N";
+          desc = "Bloco de notas";
+        }
+        {
+          key = "Super + V";
+          desc = "Clipboard";
+        }
+        {
+          key = "Super + M";
+          desc = "Processos";
+        }
+        {
+          key = "Super + X";
+          desc = "Menu de energia";
+        }
+        {
+          key = "Super + Alt + L";
+          desc = "Bloquear";
+        }
+        {
+          key = "Super + Y";
+          desc = "Wallpapers";
+        }
+        {
+          key = "Super + Shift + /";
+          desc = "Mostrar atalhos";
+        }
+      ];
 
-        "Workspaces" = [
-          {
-            key = "Super + ←";
-            desc = "Workspace anterior";
-          }
-          {
-            key = "Super + →";
-            desc = "Próximo workspace";
-          }
-          {
-            key = "Super + Shift + ←";
-            desc = "Mover janela para workspace anterior";
-          }
-          {
-            key = "Super + Shift + →";
-            desc = "Mover janela para próximo workspace";
-          }
-          {
-            key = "Super + Tab";
-            desc = "Overview";
-          }
-          {
-            key = "Super + 1..0";
-            desc = "Ir para workspace";
-          }
-          {
-            key = "Super + Shift + 1..0";
-            desc = "Mover janela para workspace";
-          }
-        ];
+      "Screenshots" = [
+        {
+          key = "Print";
+          desc = "Capturar região";
+        }
+        {
+          key = "Super + Shift + S";
+          desc = "Capturar região estilo Windows";
+        }
+        {
+          key = "Ctrl + Print";
+          desc = "Tela inteira";
+        }
+        {
+          key = "Alt + Print";
+          desc = "Janela atual";
+        }
+      ];
 
-
-        "Foco" = [
-          {
-            key = "Super + H";
-            desc = "Foco esquerda";
-          }
-          {
-            key = "Super + J";
-            desc = "Foco baixo";
-          }
-          {
-            key = "Super + K";
-            desc = "Foco cima";
-          }
-          {
-            key = "Super + L";
-            desc = "Foco direita";
-          }
-        ];
-
-
-        "Redimensionamento" = [
-          {
-            key = "Super + Ctrl + H";
-            desc = "Diminuir largura";
-          }
-          {
-            key = "Super + Ctrl + L";
-            desc = "Aumentar largura";
-          }
-          {
-            key = "Super + Ctrl + K";
-            desc = "Diminuir altura";
-          }
-          {
-            key = "Super + Ctrl + J";
-            desc = "Aumentar altura";
-          }
-        ];
-
-
-        "DMS" = [
-          {
-            key = "Super + ,";
-            desc = "Configurações";
-          }
-          {
-            key = "Super + N";
-            desc = "Notificações";
-          }
-          {
-            key = "Super + Shift + N";
-            desc = "Bloco de notas";
-          }
-          {
-            key = "Super + V";
-            desc = "Clipboard";
-          }
-          {
-            key = "Super + M";
-            desc = "Processos";
-          }
-          {
-            key = "Super + X";
-            desc = "Menu de energia";
-          }
-          {
-            key = "Super + Alt + L";
-            desc = "Bloquear";
-          }
-          {
-            key = "Super + Y";
-            desc = "Wallpapers";
-          }
-          {
-            key = "Super + Shift + /";
-            desc = "Mostrar atalhos";
-          }
-        ];
-
-
-        "Screenshots" = [
-          {
-            key = "Print";
-            desc = "Capturar região";
-          }
-          {
-            key = "Super + Shift + S";
-            desc = "Capturar região estilo Windows";
-          }
-          {
-            key = "Ctrl + Print";
-            desc = "Tela inteira";
-          }
-          {
-            key = "Alt + Print";
-            desc = "Janela atual";
-          }
-        ];
-
-
-        "Sistema" = [
-          {
-            key = "Super + Shift + E";
-            desc = "Sair do Hyprland";
-          }
-          {
-            key = "Super + P";
-            desc = "Trocar perfil de monitor";
-          }
-          {
-            key = "Super + Shift + P";
-            desc = "Liga/desliga monitores";
-          }
-        ];
-      };
+      "Sistema" = [
+        {
+          key = "Super + Shift + E";
+          desc = "Sair do Hyprland";
+        }
+        {
+          key = "Super + P";
+          desc = "Trocar perfil de monitor";
+        }
+        {
+          key = "Super + Shift + P";
+          desc = "Liga/desliga monitores";
+        }
+      ];
     };
-
-
+  };
 }
