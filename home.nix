@@ -6,6 +6,10 @@
 
     ./home/terminal.nix
 
+    ./home/appearance.nix
+
+    ./home/desktop.nix
+
     ./home/ssh.nix
 
     ./home/dms.nix

@@ -520,6 +520,32 @@
 
 
     ------------------------------------------------------------
+    -- RULE PIP
+    ------------------------------------------------------------
+
+    hl.window_rule({
+        name = "picture-in-picture",
+
+        match = {
+            title = ".*[Pp]icture[- ]in[- ][Pp]icture.*",
+        },
+
+        float = true,
+        pin = true,
+        keep_aspect_ratio = true,
+
+        size = {
+            "monitor_w * 0.25",
+            "monitor_h * 0.25",
+        },
+
+        move = {
+            "monitor_w - window_w - 20",
+            "monitor_h - window_h - 20",
+        },
+    })
+
+    ------------------------------------------------------------
     -- RESIZE
     --
     -- SUPER + CTRL + H J K L
