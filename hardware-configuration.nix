@@ -16,7 +16,6 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }: {
@@ -28,27 +27,22 @@
   # INITRD
   # ============================================================
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "nvme"
-    "usb_storage"
-    "sd_mod"
-  ];
-
-  boot.initrd.kernelModules = [
-  ];
-
-  # ============================================================
-  # KERNEL
-  # ============================================================
-
-  boot.kernelModules = [
-    "kvm-intel"
-  ];
-
-  boot.extraModulePackages = [
-  ];
+  boot = {
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "nvme"
+      "usb_storage"
+      "sd_mod"
+    ];
+    initrd.kernelModules = [
+    ];
+    kernelModules = [
+      "kvm-intel"
+    ];
+    extraModulePackages = [
+    ];
+  };
 
   # ============================================================
   # ROOT

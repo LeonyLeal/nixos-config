@@ -1,8 +1,4 @@
 {pkgs, ...}: {
-  # ============================================================
-  # NETWORK MANAGER
-  # ============================================================
-
   networking.networkmanager = {
     enable = true;
 
@@ -11,20 +7,10 @@
     ];
   };
 
-  # ============================================================
-  # GLOBALPROTECT
-  # ============================================================
-
   programs.globalprotect-openconnect.enable =
     true;
 
-  # ============================================================
-  # NETWORK / DIAGNOSTIC TOOLS
-  # ============================================================
-
   environment.systemPackages = with pkgs; [
-    # VPN
-
     wireguard-tools
 
     openconnect

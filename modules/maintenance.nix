@@ -1,8 +1,4 @@
 {pkgs, ...}: {
-  # ============================================================
-  # NH
-  # ============================================================
-
   programs.nh = {
     enable = true;
 
@@ -13,10 +9,6 @@
     # nh os test
 
     flake = "/etc/nixos";
-
-    # ----------------------------------------------------------
-    # AUTOMATIC CLEANUP
-    # ----------------------------------------------------------
 
     clean = {
       enable = true;
@@ -32,10 +24,6 @@
     };
   };
 
-  # ============================================================
-  # STORE OPTIMISATION
-  # ============================================================
-
   nix.optimise = {
     automatic = true;
 
@@ -44,107 +32,69 @@
     ];
   };
 
-  # ============================================================
-  # JOURNALD
-  # ============================================================
-
-  services.journald.extraConfig = ''
-    SystemMaxUse=1G
-    RuntimeMaxUse=256M
-    MaxRetentionSec=1month
-  '';
-
-  # ============================================================
-  # SMART
-  # ============================================================
-
-  services.smartd.enable =
-    true;
-
-  # ============================================================
-  # RESTIC
-  # ============================================================
-  #
-  # Backup LOCAL apenas do /etc/nixos.
-  #
-  # Isso protege contra:
-  #
-  # - alteração errada
-  # - exclusão acidental
-  # - corrupção lógica da configuração
-  #
-  # NÃO protege contra falha física do SSD.
-  #
-
-  services.restic.backups.nixos = {
-    initialize =
-      true;
-
-    repository = "/var/lib/restic/nixos";
-
-    passwordFile = "/var/lib/restic/nixos-password";
-
-    paths = [
-      "/etc/nixos"
-    ];
-
-    backupPrepareCommand = ''
-      install -d -m 0700 /var/lib/restic
-
-      if [ ! -s /var/lib/restic/nixos-password ]; then
-        umask 077
-
-        ${pkgs.openssl}/bin/openssl rand -base64 48 \
-          > /var/lib/restic/nixos-password
-      fi
-
-      chmod 0600 /var/lib/restic/nixos-password
+  services = {
+    journald.extraConfig = ''
+      SystemMaxUse=1G
+      RuntimeMaxUse=256M
+      MaxRetentionSec=1month
     '';
-
-    timerConfig = {
-      OnCalendar = "daily";
-
-      Persistent =
+    smartd.enable =
+      true;
+    # Backup local da configuração; não protege contra falha física do SSD.
+    restic.backups.nixos = {
+      initialize =
         true;
 
-      RandomizedDelaySec = "30m";
-    };
+      repository = "/var/lib/restic/nixos";
 
-    pruneOpts = [
-      "--keep-daily 7"
-      "--keep-weekly 5"
-      "--keep-monthly 6"
-    ];
+      passwordFile = "/var/lib/restic/nixos-password";
+
+      paths = [
+        "/etc/nixos"
+      ];
+
+      backupPrepareCommand = ''
+        install -d -m 0700 /var/lib/restic
+
+        if [ ! -s /var/lib/restic/nixos-password ]; then
+          umask 077
+
+          ${pkgs.openssl}/bin/openssl rand -base64 48 \
+            > /var/lib/restic/nixos-password
+        fi
+
+        chmod 0600 /var/lib/restic/nixos-password
+      '';
+
+      timerConfig = {
+        OnCalendar = "daily";
+
+        Persistent =
+          true;
+
+        RandomizedDelaySec = "30m";
+      };
+
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 5"
+        "--keep-monthly 6"
+      ];
+    };
   };
 
-  # ============================================================
-  # SYSTEM TOOLS
-  # ============================================================
-
   environment.systemPackages = with pkgs; [
-    # ----------------------------------------------------------
-    # NIX DEVELOPMENT
-    # ----------------------------------------------------------
-
     alejandra
 
     statix
 
     deadnix
 
-    # ----------------------------------------------------------
-    # DOCKER
-    # ----------------------------------------------------------
-
     lazydocker
 
     dive
 
     ctop
-
-    # ----------------------------------------------------------
-    # MONITORING
-    # ----------------------------------------------------------
 
     btop
 
@@ -162,17 +112,9 @@
 
     duf
 
-    # ----------------------------------------------------------
-    # HARDWARE
-    # ----------------------------------------------------------
-
     smartmontools
 
     lm_sensors
-
-    # ----------------------------------------------------------
-    # BACKUP
-    # ----------------------------------------------------------
 
     restic
   ];

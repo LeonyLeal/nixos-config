@@ -1,347 +1,124 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
-  # ============================================================
-  # STARSHIP
-  # ============================================================
-
-  programs.starship = {
-    enable =
-      true;
-
-    enableBashIntegration =
-      true;
-
-    enableZshIntegration =
-      true;
-
-    presets = [
-      "nerd-font-symbols"
-    ];
-
-    settings = {
-      add_newline =
+{pkgs, ...}: {
+  programs = {
+    fzf = {
+      enable =
         true;
 
-      palette = "pipboy";
+      enableBashIntegration =
+        true;
 
-      palettes.pipboy = {
-        green = "#7CFF7C";
+      enableZshIntegration =
+        true;
+    };
+    zoxide = {
+      enable =
+        true;
 
-        light_green = "#B7FF96";
+      enableBashIntegration =
+        true;
 
-        dark_green = "#3F6F3F";
+      enableZshIntegration =
+        true;
+    };
+    bat.enable =
+      true;
+    eza = {
+      enable =
+        true;
 
-        yellow = "#E8FF6A";
+      enableBashIntegration =
+        true;
 
-        red = "#FF6B6B";
+      enableZshIntegration =
+        true;
 
-        blue = "#63B8FF";
+      icons = "auto";
 
-        cyan = "#57FFF1";
+      git =
+        true;
+    };
+    lazygit.enable =
+      true;
+    carapace = {
+      enable =
+        true;
 
-        purple = "#C792EA";
-      };
+      enableBashIntegration =
+        true;
 
-      format = lib.concatStrings [
-        "$os"
-        "$username"
-        "$hostname"
-        "$directory"
-        "$git_branch"
-        "$git_status"
-        "$dotnet"
-        "$nodejs"
-        "$python"
-        "$java"
-        "$docker_context"
-        "$cmd_duration"
-        "$line_break"
-        "$character"
-      ];
+      enableZshIntegration =
+        true;
+    };
+    navi = {
+      enable =
+        true;
 
-      # --------------------------------------------------------
-      # OS
-      # --------------------------------------------------------
+      enableBashIntegration =
+        true;
 
-      os = {
-        disabled =
-          false;
+      enableZshIntegration =
+        true;
+    };
+    command-not-found.enable =
+      false;
+    nix-index = {
+      enable =
+        true;
 
-        style = "bold green";
-      };
+      enableBashIntegration =
+        true;
 
-      # --------------------------------------------------------
-      # DIRECTORY
-      # --------------------------------------------------------
+      enableZshIntegration =
+        true;
+    };
+    nix-index-database.comma.enable =
+      true;
+    mangohud = {
+      enable =
+        true;
 
-      directory = {
-        style = "bold green";
+      settings = {
+        fps =
+          true;
 
-        truncation_length =
-          4;
+        frametime =
+          true;
 
-        truncate_to_repo =
-          false;
+        frame_timing =
+          true;
 
-        read_only = " 󰌾";
-      };
+        cpu_stats =
+          true;
 
-      # --------------------------------------------------------
-      # GIT
-      # --------------------------------------------------------
+        cpu_temp =
+          true;
 
-      git_branch = {
-        symbol = " ";
+        gpu_stats =
+          true;
 
-        style = "bold light_green";
-      };
+        gpu_temp =
+          true;
 
-      git_status = {
-        style = "bold yellow";
-      };
+        ram =
+          true;
 
-      # --------------------------------------------------------
-      # .NET
-      # --------------------------------------------------------
+        vram =
+          true;
 
-      dotnet = {
-        symbol = "󰪮 ";
+        position = "top-right";
 
-        style = "bold purple";
-      };
-
-      # --------------------------------------------------------
-      # NODE
-      # --------------------------------------------------------
-
-      nodejs = {
-        symbol = " ";
-
-        style = "bold green";
-      };
-
-      # --------------------------------------------------------
-      # PYTHON
-      # --------------------------------------------------------
-
-      python = {
-        symbol = " ";
-
-        style = "bold yellow";
-      };
-
-      # --------------------------------------------------------
-      # JAVA
-      # --------------------------------------------------------
-
-      java = {
-        symbol = " ";
-
-        style = "bold red";
-      };
-
-      # --------------------------------------------------------
-      # DOCKER
-      # --------------------------------------------------------
-
-      docker_context = {
-        symbol = " ";
-
-        style = "bold blue";
-      };
-
-      # --------------------------------------------------------
-      # COMMAND DURATION
-      # --------------------------------------------------------
-
-      cmd_duration = {
-        min_time =
-          1500;
-
-        format = " [$duration](bold dark_green)";
-      };
-
-      # --------------------------------------------------------
-      # PROMPT
-      # --------------------------------------------------------
-
-      character = {
-        success_symbol = "[❯](bold green)";
-
-        error_symbol = "[❯](bold red)";
+        toggle_hud = "Shift_R+F12";
       };
     };
   };
 
-  # ============================================================
-  # FZF
-  # ============================================================
-
-  programs.fzf = {
-    enable =
-      true;
-
-    enableBashIntegration =
-      true;
-
-    enableZshIntegration =
-      true;
-  };
-
-  # ============================================================
-  # ZOXIDE
-  # ============================================================
-
-  programs.zoxide = {
-    enable =
-      true;
-
-    enableBashIntegration =
-      true;
-
-    enableZshIntegration =
-      true;
-  };
-
-  # ============================================================
-  # BAT
-  # ============================================================
-
-  programs.bat.enable =
-    true;
-
-  # ============================================================
-  # EZA
-  # ============================================================
-
-  programs.eza = {
-    enable =
-      true;
-
-    enableBashIntegration =
-      true;
-
-    enableZshIntegration =
-      true;
-
-    icons = "auto";
-
-    git =
-      true;
-  };
-
-  # ============================================================
-  # LAZYGIT
-  # ============================================================
-
-  programs.lazygit.enable =
-    true;
-
-  # ============================================================
-  # CARAPACE
-  # ============================================================
   #
   # Completion inteligente para CLIs.
   #
 
-  programs.carapace = {
-    enable =
-      true;
-
-    enableBashIntegration =
-      true;
-
-    enableZshIntegration =
-      true;
-  };
-
-  # ============================================================
-  # NAVI
-  # ============================================================
   #
   # Cheatsheets interativas no terminal.
   #
-
-  programs.navi = {
-    enable =
-      true;
-
-    enableBashIntegration =
-      true;
-
-    enableZshIntegration =
-      true;
-  };
-
-  # ============================================================
-  # NIX INDEX
-  # ============================================================
-
-  programs.command-not-found.enable =
-    false;
-
-  programs.nix-index = {
-    enable =
-      true;
-
-    enableBashIntegration =
-      true;
-
-    enableZshIntegration =
-      true;
-  };
-
-  programs.nix-index-database.comma.enable =
-    true;
-
-  # ============================================================
-  # MANGOHUD
-  # ============================================================
-
-  programs.mangohud = {
-    enable =
-      true;
-
-    settings = {
-      fps =
-        true;
-
-      frametime =
-        true;
-
-      frame_timing =
-        true;
-
-      cpu_stats =
-        true;
-
-      cpu_temp =
-        true;
-
-      gpu_stats =
-        true;
-
-      gpu_temp =
-        true;
-
-      ram =
-        true;
-
-      vram =
-        true;
-
-      position = "top-right";
-
-      toggle_hud = "Shift_R+F12";
-    };
-  };
-
-  # ============================================================
-  # EXTRA TERMINAL TOOLS
-  # ============================================================
 
   home.packages = with pkgs; [
     fastfetch

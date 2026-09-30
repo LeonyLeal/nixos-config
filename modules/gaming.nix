@@ -1,35 +1,19 @@
 {pkgs, ...}: {
-  # ============================================================
-  # STEAM
-  # ============================================================
+  programs = {
+    steam.enable =
+      true;
+    gamescope = {
+      enable = true;
 
-  programs.steam.enable =
-    true;
+      capSysNice = true;
+    };
+    gamemode = {
+      enable = true;
 
-  # ============================================================
-  # GAMESCOPE
-  # ============================================================
-
-  programs.gamescope = {
-    enable = true;
-
-    capSysNice = true;
+      # Mais conservador para nosso NixOS atual.
+      enableRenice = false;
+    };
   };
-
-  # ============================================================
-  # GAMEMODE
-  # ============================================================
-
-  programs.gamemode = {
-    enable = true;
-
-    # Mais conservador para nosso NixOS atual.
-    enableRenice = false;
-  };
-
-  # ============================================================
-  # GAMING PACKAGES
-  # ============================================================
 
   environment.systemPackages = with pkgs; [
     # Epic / GOG / Amazon.

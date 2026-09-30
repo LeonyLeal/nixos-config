@@ -1,31 +1,19 @@
 {...}: {
   imports = [
-    ./home/shell.nix
-
+    ./home/shell
     ./home/tools.nix
-
-    ./home/terminal.nix
-
-    ./home/appearance.nix
-
-    ./home/desktop.nix
-
+    ./home/terminal/kitty.nix
+    ./home/desktop
+    ./home/themes/lain
     ./home/ssh.nix
-
-    ./home/dms.nix
-
-    ./home/hyprland.nix
+    ./home/hyprland
   ];
 
-  # ============================================================
-  # HOME MANAGER
-  # ============================================================
-
-  home.username = "z30n";
-
-  home.homeDirectory = "/home/z30n";
-
-  home.stateVersion = "26.05";
+  home = {
+    username = "z30n";
+    homeDirectory = "/home/z30n";
+    stateVersion = "26.05";
+  };
 
   programs.home-manager.enable =
     true;

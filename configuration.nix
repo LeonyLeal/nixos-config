@@ -4,13 +4,13 @@
 
     ./modules/base.nix
     ./modules/boot.nix
-    ./modules/desktop.nix
-    ./modules/desktop-extras.nix
+    ./modules/hardware/nvidia.nix
+    ./modules/desktop
     ./modules/development.nix
     ./modules/gaming.nix
     ./modules/networking.nix
     ./modules/security.nix
     ./modules/maintenance.nix
-    ./modules/memory.nix
+    ./modules/hardware/memory.nix
   ];
 }
