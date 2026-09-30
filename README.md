@@ -18,6 +18,7 @@ O sistema entra por `configuration.nix`; a configuração do usuário, por `home
 | Aplicativos padrão e montagem de mídia | `home/desktop/default.nix` |
 | GTK/Qt, cursor e ícones base | `home/desktop/appearance.nix` |
 | Inicialização, preset opcional e geração da ajuda do DMS | `home/desktop/dms.nix` |
+| Plugins do DMS e suas opções declarativas | `home/desktop/plugins.nix` |
 | Bash, Zsh, aliases e integrações | `home/shell/default.nix` |
 | Prompt Starship | `home/shell/starship.nix` |
 | Ferramentas de linha de comando | `home/tools.nix` |
@@ -54,6 +55,34 @@ funcionais, sem referências à paleta ou ao shader Lain.
 
 Consulte [o guia do tema](home/themes/lain/README.md) para aplicação e backups.
 
+## Plugins do DMS
+
+`home/desktop/plugins.nix` instala e habilita Docker Manager e VSCode Launcher.
+Seus fontes são inputs sem flake, com revisões fixadas em `flake.lock`.
+
+- Docker Manager: containers, Compose, logs e terminal pelo Kitty. O widget é
+  acrescentado à direita da primeira barra ativa, caso ainda não esteja em
+  nenhuma seção. Uma posição existente é preservada.
+- VSCode Launcher: abra o launcher com `Super + Space` e pesquise com `vs`,
+  por exemplo `vs nixos`. Usa o VS Code estável e seu histórico de projetos.
+
+O launcher `desktop-shell` prepara `plugin_settings.json` depois do tema e
+antes de abrir o DMS. Mescla apenas as opções declaradas, preservando outros
+plugins e preferências; backups originais recebem o sufixo `.pre-plugins`.
+As opções declaradas são reaplicadas a cada inicialização. Na ausência de
+`barConfigs`, o layout padrão do DMS é preservado; o widget pode ser adicionado
+pela interface ou na próxima inicialização após o DMS salvar suas barras.
+
+Os diretórios desses dois plugins são gerenciados pelo Home Manager. Para
+atualizá-los, use o Nix, mantendo as versões registradas no repositório:
+
+```sh
+nix flake update dms-docker-manager dms-vscode-launcher --flake path:/etc/nixos
+```
+
+Após o rebuild, entre novamente na sessão ou execute `dms kill` seguido de
+`hyprctl dispatch exec desktop-shell`. Isso reinicia a shell e aplica as opções.
+
 ## Validar e aplicar
 
 ```sh
@@ -61,7 +90,7 @@ nix flake check path:/etc/nixos --no-update-lock-file
 sudo nixos-rebuild switch --flake path:/etc/nixos#nixos
 ```
 
-O check constrói o sistema, executa os testes do preset e dos atalhos, verifica
+O check constrói o sistema, executa os testes do tema, dos plugins e dos atalhos, verifica
 formatação/lint e constrói o Home Manager sem o tema Lain. Ele não ativa a
 configuração na sessão atual.
 

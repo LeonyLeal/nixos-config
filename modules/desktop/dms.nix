@@ -6,7 +6,7 @@
   programs.dms-shell = {
     enable = true;
     package = dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    # Iniciado por lain-dms no Hyprland, após preparar as preferências.
+    # Iniciado por desktop-shell no Hyprland, após preparar as preferências.
     systemd.enable = false;
     enableSystemMonitoring = true;
     enableVPN = true;

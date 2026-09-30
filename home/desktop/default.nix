@@ -15,7 +15,7 @@ _: let
 
   archiveManager = "org.gnome.FileRoller.desktop";
 in {
-  imports = [./appearance.nix ./applications.nix ./dms.nix];
+  imports = [./appearance.nix ./applications.nix ./dms.nix ./plugins.nix];
 
   #
   # Automount de:

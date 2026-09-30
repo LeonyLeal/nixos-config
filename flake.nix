@@ -16,6 +16,15 @@
 
     dms.url = "github:AvengeMedia/DankMaterialShell/v1.6.2";
 
+    dms-docker-manager = {
+      url = "github:LuckShiba/DmsDockerManager";
+      flake = false;
+    };
+    dms-vscode-launcher = {
+      url = "github:sr-tream/dms-vscode-launcher";
+      flake = false;
+    };
+
     dank-greeter.url = "github:AvengeMedia/dank-greeter";
 
     nix-index-database = {
@@ -81,7 +90,7 @@
 
         {
           home-manager = {
-            extraSpecialArgs = {inherit pkgsUnstable;};
+            extraSpecialArgs = {inherit inputs pkgsUnstable;};
             useGlobalPkgs =
               true;
             useUserPackages =

@@ -72,6 +72,38 @@
         "type": "github"
       }
     },
+    "dms-docker-manager": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790338493,
+        "narHash": "sha256-KEj0d1K0+ZOxbQ9FLzapWZ82i31hbpEHUAOZfJF8IGs=",
+        "owner": "LuckShiba",
+        "repo": "DmsDockerManager",
+        "rev": "f6f7d94c84510da098980a2bb733137e90f98fd8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LuckShiba",
+        "repo": "DmsDockerManager",
+        "type": "github"
+      }
+    },
+    "dms-vscode-launcher": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771981707,
+        "narHash": "sha256-pofHCyQ8zAZNTMG/G6YqCx4P1GMjfo7uEJHw3LJUrw4=",
+        "owner": "sr-tream",
+        "repo": "dms-vscode-launcher",
+        "rev": "8db331b0dead8c463423860d7d9cbe682b5db8db",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sr-tream",
+        "repo": "dms-vscode-launcher",
+        "type": "github"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -297,6 +329,8 @@
       "inputs": {
         "dank-greeter": "dank-greeter",
         "dms": "dms",
+        "dms-docker-manager": "dms-docker-manager",
+        "dms-vscode-launcher": "dms-vscode-launcher",
         "globalprotect-openconnect": "globalprotect-openconnect",
         "home-manager": "home-manager",
         "nix-index-database": "nix-index-database",

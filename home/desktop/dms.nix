@@ -17,10 +17,16 @@
         ${lib.escapeShellArg "${config.xdg.configHome}/DankMaterialShell/settings.json"} \
         ${lib.escapeShellArg "${config.xdg.stateHome}/DankMaterialShell/session.json"}
     ''}
+    ${cfg.beforeStart}
     exec ${lib.getExe cfg.package} run "$@"
   '';
 in {
   options.desktop.dms = {
+    beforeStart = lib.mkOption {
+      type = lib.types.lines;
+      default = "";
+      description = "Preparation commands run after the appearance preset, before DMS starts.";
+    };
     package = lib.mkOption {
       type = lib.types.package;
       default = osConfig.programs.dms-shell.package;
