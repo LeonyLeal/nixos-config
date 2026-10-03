@@ -42,12 +42,29 @@ in {
   config = {
     home.packages = [launcher];
 
-    # Apply before DMS starts: SessionData does not reload external edits.
-    xdg.configFile."hypr/hyprland.lua".text = lib.mkAfter ''
-      hl.on("hyprland.start", function()
-        hl.exec_cmd("${lib.getExe launcher}")
-      end)
-    '';
+    # Apply preferences before DMS starts, including on service restarts.
+    systemd.user.services.dms = {
+      Unit = {
+        Description = "Dank Material Shell (DMS)";
+        PartOf = ["graphical-session.target"];
+        After = ["graphical-session.target"];
+        Requisite = ["graphical-session.target"];
+      };
+      Service = {
+        Type = "dbus";
+        BusName = "org.freedesktop.Notifications";
+        ExecStart = "${lib.getExe launcher} --session";
+        ExecReload = "${pkgs.coreutils}/bin/kill -USR1 $MAINPID";
+        LimitNOFILE = "16384:infinity";
+        Restart = "on-failure";
+        RestartForceExitStatus = "TEMPFAIL";
+        SuccessExitStatus = "TEMPFAIL";
+        RestartSec = "1.23";
+        TimeoutStartSec = "90s";
+        TimeoutStopSec = "10s";
+      };
+      Install.WantedBy = ["graphical-session.target"];
+    };
 
     xdg.configFile."DankMaterialShell/cheatsheets/z30n.json".text = builtins.toJSON {
       title = "Z30N Hyprland";

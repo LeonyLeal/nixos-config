@@ -6,7 +6,7 @@
   programs.dms-shell = {
     enable = true;
     package = dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    # Iniciado por desktop-shell no Hyprland, após preparar as preferências.
+    # O Home Manager gerencia dms.service com o launcher desktop-shell.
     systemd.enable = false;
     enableSystemMonitoring = true;
     enableVPN = true;

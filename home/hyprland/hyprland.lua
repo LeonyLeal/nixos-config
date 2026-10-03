@@ -129,6 +129,18 @@ hl.config({
     },
 })
 
+-- BLUR DO DMS
+
+-- O Hyprland aplica o blur às layers; não oferece ext-background-effect-v1.
+hl.layer_rule({
+    name = "dms-blur",
+    match = {
+        namespace = "^dms:.*$",
+    },
+    blur = true,
+    ignore_alpha = 0,
+})
+
 -- DWINDLE
 
 hl.config({

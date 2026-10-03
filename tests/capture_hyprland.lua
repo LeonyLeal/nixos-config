@@ -1,6 +1,6 @@
 -- Execute the generated configuration without a graphical session and record
 -- the calls it would send to Hyprland (including dispatcher arguments/flags).
-local result = { binds = {}, rules = {}, config = {}, monitors = {}, env = {}, startup = {} }
+local result = { binds = {}, rules = {}, layers = {}, config = {}, monitors = {}, env = {}, startup = {} }
 local function merge(target, source)
     for key, value in pairs(source) do
         if type(value) == "table" and type(target[key]) == "table" then
@@ -22,6 +22,7 @@ hl = {
         table.insert(result.binds, { key = key, action = action, options = options })
     end,
     window_rule = function(rule) table.insert(result.rules, rule) end,
+    layer_rule = function(rule) table.insert(result.layers, rule) end,
     config = function(settings) merge(result.config, settings) end,
     monitor = function(settings) table.insert(result.monitors, settings) end,
     env = function(key, value) result.env[key] = value end,

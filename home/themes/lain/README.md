@@ -18,12 +18,12 @@ sudo nixos-rebuild switch --flake path:/etc/nixos#nixos
 O prefixo `path:` inclui os arquivos novos mesmo antes de adicioná-los ao Git.
 Ao versionar o tema, inclua também o script Python, o wallpaper e os testes.
 
-O Hyprland inicia `desktop-shell`, que aplica o preset antes de executar o DMS.
-Para aplicar à sessão já aberta após o rebuild:
+O serviço de usuário `dms.service` inicia `desktop-shell`, que aplica o preset
+antes de executar o DMS. Entre novamente na sessão ao migrar da inicialização
+direta pelo Hyprland. Nas atualizações seguintes, após o rebuild:
 
 ```sh
-dms kill
-hyprctl dispatch exec desktop-shell
+systemctl --user restart dms.service
 ```
 
 Isso reinicia apenas a shell do desktop. Reabra os aplicativos GTK e o Kitty
@@ -37,7 +37,8 @@ gerenciados por symlink. Os arquivos originais recebem um backup único:
 - `~/.config/DankMaterialShell/settings.json.pre-lain`
 - `~/.local/state/DankMaterialShell/session.json.pre-lain`
 
-Para restaurar essas preferências, pare o DMS, restaure os backups e inicie
+Para restaurar essas preferências, execute `systemctl --user stop dms.service`,
+restaure os backups e inicie
 `dms run` diretamente. Para manter a restauração nas próximas sessões, desative
 o preset com `desktop.dms.preset = lib.mkForce null;` em um módulo do Home Manager.
 Para remover também os estilos declarativos, remova o import do tema em `home.nix`.

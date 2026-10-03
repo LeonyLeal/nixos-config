@@ -44,10 +44,11 @@ Hyprland e a ajuda do DMS, incluindo mídia, brilho, mouse e workspaces.
 O antigo índice `hypr/dms/binds.conf` foi removido; a ajuda usa o provider `z30n`.
 
 O módulo base combina `hyprland.lua` com os atalhos gerados. O tema acrescenta
-as cores, e o módulo do DMS acrescenta a inicialização. O resultado é instalado
+as cores. O resultado é instalado
 por `xdg.configFile` em `~/.config/hypr/hyprland.lua`.
 
-O Hyprland inicia `desktop-shell` pelo caminho do Nix store. O launcher prepara
+O serviço de usuário `dms.service`, gerenciado pelo Home Manager, inicia
+`desktop-shell` junto da sessão gráfica do UWSM. O launcher prepara
 as preferências antes de executar o pacote DMS definido no sistema. O preset
 fica no tema; a lógica de aplicação fica em `home/desktop/apply-theme.py`.
 Remover `./home/themes/lain` dos imports de `home.nix` mantém os módulos base
@@ -80,8 +81,14 @@ atualizá-los, use o Nix, mantendo as versões registradas no repositório:
 nix flake update dms-docker-manager dms-vscode-launcher --flake path:/etc/nixos
 ```
 
-Após o rebuild, entre novamente na sessão ou execute `dms kill` seguido de
-`hyprctl dispatch exec desktop-shell`. Isso reinicia a shell e aplica as opções.
+Após o rebuild, entre novamente na sessão. Nas atualizações seguintes, use
+`systemctl --user restart dms.service` para reiniciar a shell e aplicar as opções.
+
+O menu `hyprland-applications.menu` é fornecido pelo Garcon para corresponder
+ao `XDG_MENU_PREFIX=hyprland-` do UWSM. O blur das superfícies do DMS é aplicado
+pelas regras de layers do Hyprland. O aviso `Background Blur - Unsupported`
+do `dms doctor` continua esperado: ele verifica o protocolo
+`ext-background-effect-v1`, que o Hyprland não oferece.
 
 ## Validar e aplicar
 
