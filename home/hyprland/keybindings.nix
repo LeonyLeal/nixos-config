@@ -89,7 +89,7 @@ in
     (bind "Sistema" "SUPER + SHIFT + P" "Liga/desliga monitores"
       ''hl.dsp.dpms({ action = "toggle" })'' {})
     (bind "Sistema" "SUPER + SHIFT + E" "Sair do Hyprland"
-      ''hl.dsp.exit()'' {})
+      ''hl.dsp.exec_cmd("desktop-logout")'' {})
     (bind "Áudio e mídia" "XF86AudioRaiseVolume" "Aumentar volume"
       ''hl.dsp.exec_cmd("dms ipc call audio increment 3")'' {
         locked = true;

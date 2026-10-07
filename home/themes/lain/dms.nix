@@ -24,6 +24,8 @@ in {
       widgetBackgroundColor = "sch";
       widgetColorMode = "default";
       wallpaperFillMode = "Fill";
+      # Restaura o fundo integrado ao voltar de um tema com player externo.
+      screenPreferences.wallpaper = ["all"];
     };
     bar = {
       island = false;

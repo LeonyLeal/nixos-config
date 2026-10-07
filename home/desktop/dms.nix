@@ -9,6 +9,12 @@
   jsonFormat = pkgs.formats.json {};
   bindings = import ../hyprland/keybindings.nix {inherit lib;};
   preset = jsonFormat.generate "desktop-preset.json" cfg.preset;
+  logoutCommand = pkgs.writeShellScriptBin "desktop-logout" ''
+    ${lib.optionalString (cfg.logoutCommand != "") ''
+      exec ${cfg.logoutCommand}
+    ''}
+    exec hyprctl dispatch exit
+  '';
   launcher = pkgs.writeShellScriptBin "desktop-shell" ''
     set -e
     ${lib.optionalString (cfg.preset != null) ''
@@ -27,6 +33,11 @@ in {
       default = "";
       description = "Preparation commands run after the appearance preset, before DMS starts.";
     };
+    logoutCommand = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "Optional command run by the desktop-logout helper before its compositor-exit fallback.";
+    };
     package = lib.mkOption {
       type = lib.types.package;
       default = osConfig.programs.dms-shell.package;
@@ -40,7 +51,7 @@ in {
   };
 
   config = {
-    home.packages = [launcher];
+    home.packages = [launcher logoutCommand];
 
     # Apply preferences before DMS starts, including on service restarts.
     systemd.user.services.dms = {

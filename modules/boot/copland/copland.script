@@ -1,0 +1,186 @@
+# Native Plymouth animation. Boot loading remains visible for at least sixteen
+# seconds; shutdown/reboot transitions finish within three seconds.
+Window.SetBackgroundTopColor(0.063, 0.094, 0.157);
+Window.SetBackgroundBottomColor(0.031, 0.051, 0.098);
+
+logo_image = Image("logo.png");
+orb_image = Image("orb.png");
+ripple_image = Image("ripple.png");
+logo = Sprite();
+orb = Sprite();
+ripple = Sprite();
+scanlines = Sprite(Image("scanlines.png").Scale(Window.GetWidth(), Window.GetHeight()));
+scanlines.SetPosition(Window.GetX(), Window.GetY(), 10);
+title = Sprite();
+subtitle = Sprite();
+status_sprite = Sprite();
+prompt_sprite = Sprite();
+ticks = 0;
+STATUS_UPDATE_TICKS = 60;
+last_status_tick = -60;
+pending_message = "";
+status_pending = 0;
+prompt_active = 0;
+last_message = "";
+mode = Plymouth.GetMode();
+shutdown = mode == "shutdown" || mode == "reboot" || mode == "halt" || mode == "kexec";
+
+fun fit_text(text, red, green, blue, font, max_width)
+{
+    local.image = Image.Text(text, red, green, blue, 1, font);
+    if (image.GetWidth() > max_width)
+        image = image.Scale(max_width, Math.Max(1, Math.Int(image.GetHeight() * max_width / image.GetWidth())));
+    return image;
+}
+
+fun place_text(sprite, image, y)
+{
+    sprite.SetImage(image);
+    sprite.SetPosition(Window.GetX() + (Window.GetWidth() - image.GetWidth()) / 2, y, 20);
+}
+
+fun clean_line(text)
+{
+    local.result = "";
+    for (local.i = 0; text.CharAt(i) != "" && i < 240; i++) {
+        local.c = text.CharAt(i);
+        # Comparing "\r" in Plymouth also matches lowercase r, so only normalize line feed here.
+        if (c == "\n") c = " ";
+        result += c;
+    }
+    return result;
+}
+
+fun render_status(text)
+{
+    global.last_message = clean_line(text);
+    local.red = 0.77;
+    local.green = 0.84;
+    local.blue = 0.91;
+    if (last_message.CharAt(0) == "[" && last_message.CharAt(1) == "E") {
+        red = 1; green = 0.36; blue = 0.38;
+    } else if (last_message.CharAt(0) == "[" && last_message.CharAt(1) == "A") {
+        red = 0.90; green = 0.76; blue = 0.52;
+    }
+    local.image = fit_text(last_message, red, green, blue, "DejaVu Sans Mono 12", Window.GetWidth() * 0.88);
+    place_text(status_sprite, image, Window.GetY() + Window.GetHeight() * 0.86);
+    status_sprite.SetOpacity(!prompt_active);
+}
+
+fun show_status(text)
+{
+    local.message = clean_line(text);
+    if (ticks - last_status_tick >= STATUS_UPDATE_TICKS) {
+        global.last_status_tick = ticks;
+        global.status_pending = 0;
+        render_status(message);
+    } else {
+        global.pending_message = message;
+        global.status_pending = 1;
+    }
+}
+
+fun hide_status(text)
+{
+    # An older message disappearing must not erase a newer event.
+    if (clean_line(text) == last_message) show_status("");
+}
+
+fun refresh()
+{
+    global.ticks++;
+    if (status_pending && ticks - last_status_tick >= STATUS_UPDATE_TICKS) {
+        local.message = pending_message;
+        global.status_pending = 0;
+        global.last_status_tick = ticks;
+        render_status(message);
+    }
+    local.time = ticks / 50;
+    local.size = Math.Min(360, Math.Min(Window.GetWidth() * 0.42, Window.GetHeight() * 0.48));
+    local.cx = Window.GetX() + Window.GetWidth() / 2;
+    local.cy = Window.GetY() + Window.GetHeight() * 0.43;
+    local.appear = Math.Clamp(time / 1.1, 0, 1);
+    if (shutdown) appear = 1 - Math.Clamp((time - 2.4) / 0.6, 0, 1);
+    logo.SetImage(logo_image.Scale(size, size));
+    logo.SetPosition(cx - size / 2, cy - size / 2, 2);
+    logo.SetOpacity(appear * (0.94 + 0.06 * Math.Sin(time * 1.8)));
+
+    local.drop = Math.Clamp(time / 1.1, 0, 1);
+    local.orb_size = size * 0.23;
+    orb.SetImage(orb_image.Scale(orb_size, orb_size));
+    local.orb_y = cy - size * 0.6 * (1 - drop * drop);
+    local.orb_opacity = (1 - appear) * (0.8 + 0.2 * Math.Sin(time * 2));
+    if (shutdown) {
+        local.shutdown_progress = Math.Clamp(time / 3, 0, 1);
+        orb_y = cy - size * 0.6 * (1 - shutdown_progress);
+        orb_opacity = Math.Clamp(time / 0.6, 0, 1) * (1 - Math.Clamp((time - 2.5) / 0.5, 0, 1));
+    }
+    orb.SetPosition(cx - orb_size / 2, orb_y - orb_size / 2, 3);
+    orb.SetOpacity(orb_opacity);
+
+    local.wave = Math.Clamp((time - 1.05) / 1.6, 0, 1);
+        if (shutdown) wave = 1 - Math.Clamp(time / 3, 0, 1);
+    local.wave_width = Math.Max(1, size * 1.75 * wave);
+    local.wave_height = Math.Max(1, wave_width * 0.375);
+    ripple.SetImage(ripple_image.Scale(wave_width, wave_height));
+    ripple.SetPosition(cx - wave_width / 2, cy - wave_height / 2, 1);
+    if (shutdown) ripple.SetOpacity(Math.Clamp(time / 0.8, 0, 1) * wave * 0.7);
+    else ripple.SetOpacity((1 - wave) * 0.8);
+
+    for (local.i = 0; i < 3; i++) {
+        if (!satellite[i]) global.satellite[i] = Sprite(orb_image.Scale(size * 0.085, size * 0.085));
+        local.angle = time * 0.48 + i * 2 * Math.Pi / 3;
+        local.orbit = size * 0.40;
+        local.satellite_opacity = appear * 0.65;
+        if (shutdown) {
+            orbit = orbit * (1 - Math.Clamp(time / 3, 0, 1));
+            satellite_opacity = Math.Clamp((3 - time) / 0.5, 0, 1) * 0.65;
+        }
+        satellite[i].SetPosition(cx + Math.Sin(angle) * orbit - size * 0.0425,
+            cy + Math.Cos(angle) * orbit - size * 0.0425, 4);
+        satellite[i].SetOpacity(satellite_opacity);
+    }
+
+    local.heading = fit_text("Copland OS", 0.70, 0.85, 0.94, "DejaVu Sans 25", Window.GetWidth() * 0.8);
+    place_text(title, heading, cy + size * 0.49);
+    title.SetOpacity(Math.Clamp(appear * 1.4, 0, 1));
+    local.caption = fit_text("ENTERPRISE", 0.36, 0.59, 0.73, "DejaVu Sans 11", Window.GetWidth() * 0.8);
+    place_text(subtitle, caption, cy + size * 0.49 + heading.GetHeight() + 8);
+    subtitle.SetOpacity(appear);
+}
+
+fun show_prompt(prompt, answer)
+{
+    global.prompt_active = 1;
+    status_sprite.SetOpacity(0);
+    local.image = fit_text(clean_line(prompt) + "  " + answer, 0.86, 0.84, 0.73,
+        "DejaVu Sans 15", Window.GetWidth() * 0.88);
+    place_text(prompt_sprite, image, Window.GetY() + Window.GetHeight() * 0.86);
+    prompt_sprite.SetOpacity(1);
+}
+
+fun password_prompt(prompt, count)
+{
+    local.bullets = "";
+    for (local.i = 0; i < Math.Min(count, 40); i++) bullets += "*";
+    show_prompt(prompt, bullets);
+}
+
+fun normal_display()
+{
+    global.prompt_active = 0;
+    prompt_sprite.SetOpacity(0);
+    status_sprite.SetOpacity(1);
+}
+
+Plymouth.SetRefreshFunction(refresh);
+Plymouth.SetUpdateStatusFunction(show_status);
+Plymouth.SetDisplayMessageFunction(show_status);
+Plymouth.SetHideMessageFunction(hide_status);
+Plymouth.SetDisplayPasswordFunction(password_prompt);
+Plymouth.SetDisplayQuestionFunction(show_prompt);
+Plymouth.SetDisplayNormalFunction(normal_display);
+if (mode == "reboot") show_status("Reiniciando o sistema...");
+else if (mode == "kexec") show_status("Carregando o novo kernel...");
+else if (shutdown) show_status("Desligando o sistema...");
+else show_status("Iniciando o sistema...");

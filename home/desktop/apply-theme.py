@@ -85,7 +85,14 @@ def main():
     # Read and validate both files before changing either one.
     settings = read_preferences(settings_path)
     session = read_preferences(session_path)
-    settings.update(preset["settings"])
+    appearance = dict(preset["settings"])
+    if "screenPreferences" in appearance:
+        current_screens = settings.get("screenPreferences", {})
+        preset_screens = appearance["screenPreferences"]
+        if not isinstance(current_screens, dict) or not isinstance(preset_screens, dict):
+            raise ValueError("screenPreferences must be an object")
+        appearance["screenPreferences"] = current_screens | preset_screens
+    settings.update(appearance)
     bars = settings.get("barConfigs", [preset["defaultBar"]])
     if not isinstance(bars, list) or not all(isinstance(bar, dict) for bar in bars):
         raise ValueError("barConfigs must be a list of objects")

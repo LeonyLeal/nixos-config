@@ -4,7 +4,7 @@
     ./home/tools.nix
     ./home/terminal/kitty.nix
     ./home/desktop
-    ./home/themes/lain
+    ./home/themes/copland
     ./home/ssh.nix
     ./home/hyprland
   ];

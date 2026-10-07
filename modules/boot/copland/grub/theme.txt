@@ -1,0 +1,42 @@
+title-text: "Copland OS Enterprise"
+title-font: "DejaVu Regular"
+title-color: "#DCD7BA"
+
+desktop-image: "background.png"
+message-font: "DejaVu Regular"
+message-color: "#DCD7BA"
+terminal-font: "Unifont Regular"
+terminal-box: "terminal_*.png"
+
++ progress_bar {
+  id = "__timeout__"
+  top = 94%-20
+  left = 50%-30%
+  height = 8
+  width = 60%
+  show_text = true
+  text = "@TIMEOUT_NOTIFICATION_MIDDLE@"
+  border_color = "#7E9CD8"
+  bg_color = "#2A2A37"
+  fg_color = "#938AA9"
+}
+
++ boot_menu {
+  left = 50%-500
+  width = 1000
+  top = 50%
+  height = 38%
+  item_font = "DejaVu Regular"
+  item_color = "#DCD7BA"
+  item_height = 34
+  item_icon_space = 14
+  item_spacing = 2
+  item_padding = 3
+  selected_item_font = "DejaVu Regular"
+  selected_item_color = "#16161D"
+  selected_item_pixmap_style = "select_*.png"
+  icon_height = 30
+  icon_width = 42
+  scrollbar = false
+  menu_pixmap_style = "boot_menu_*.png"
+}

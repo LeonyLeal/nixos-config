@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360">
+  <!-- Original vector recreation inspired by the Navi / Copland OS emblem. -->
+  <defs>
+    <radialGradient id="halo">
+      <stop stop-color="#73ddff" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#437dbf" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="core">
+      <stop stop-color="#c7f7ff"/><stop offset=".5" stop-color="#75d7f2"/>
+      <stop offset="1" stop-color="#3b7ba5"/>
+    </radialGradient>
+    <linearGradient id="ink" x2="0" y2="1">
+      <stop stop-color="#65bddd"/><stop offset="1" stop-color="#376791"/>
+    </linearGradient>
+  </defs>
+  <circle cx="180" cy="165" r="160" fill="url(#halo)"/>
+  <circle cx="180" cy="165" r="111" fill="#426896" opacity=".28"/>
+  <circle cx="180" cy="165" r="86" fill="none" stroke="#1b304d" stroke-width="8"/>
+  <circle cx="180" cy="165" r="70" fill="none" stroke="url(#ink)" stroke-width="16"/>
+  <circle cx="180" cy="165" r="49" fill="none" stroke="#172b43" stroke-width="7"/>
+  <circle cx="180" cy="165" r="34" fill="url(#core)"/>
+  <g fill="none" stroke="url(#ink)" stroke-width="13" stroke-linecap="round">
+    <path d="M113 112 C58 145 56 168 111 205"/>
+    <path d="M247 112 C302 145 304 168 249 205"/>
+    <path d="M166 214 L166 252 C166 283 126 286 112 263"/>
+    <path d="M194 214 L194 252 C194 283 234 286 248 263"/>
+  </g>
+  <g fill="#9ae8ff">
+    <circle cx="180" cy="51" r="6"/>
+    <circle cx="82" cy="226" r="6"/>
+    <circle cx="278" cy="226" r="6"/>
+  </g>
+</svg>

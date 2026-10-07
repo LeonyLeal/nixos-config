@@ -7,6 +7,22 @@ hl.monitor({
     scale = "auto",
 })
 
+-- TCL principal; identifica o monitor mesmo se mudar de porta.
+hl.monitor({
+    output = "desc:Technical Concepts Ltd 25G64 2A624AA011016",
+    mode = "1920x1080@300",
+    position = "0x0",
+    scale = 1,
+})
+
+-- AOC à esquerda do TCL, alinhado pelo topo.
+hl.monitor({
+    output = "desc:AOC 2260WG5 0x000004F6",
+    mode = "1920x1080@74.92",
+    position = "1920x0",
+    scale = 1,
+})
+
 -- PROGRAMAS
 
 -- CURSOR
@@ -126,6 +142,9 @@ hl.config({
         disable_hyprland_logo = true,
 
         force_default_wallpaper = 0,
+
+        -- Evita expor o fundo preto padrão enquanto a sessão gráfica inicia.
+        background_color = "rgb(0b1423)",
     },
 })
 

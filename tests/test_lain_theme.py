@@ -63,6 +63,22 @@ class ApplyThemeTests(unittest.TestCase):
         self.assertEqual(json.loads(self.settings.read_text())["barConfigs"][0]["id"], "default")
         self.assertEqual(json.loads(self.session.read_text())["wallpaperPath"], "/wallpaper.png")
 
+    def test_wallpaper_monitor_preset_preserves_other_screen_preferences(self):
+        self.seed()
+        settings = json.loads(self.settings.read_text())
+        settings["screenPreferences"] = {"wallpaper": ["all"], "notifications": ["DP-3"], "toast": ["DP-2"]}
+        self.settings.write_text(json.dumps(settings))
+        preset = json.loads(self.preset.read_text())
+        preset["settings"]["screenPreferences"] = {"wallpaper": []}
+        self.preset.write_text(json.dumps(preset))
+
+        result = self.apply()
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(self.settings.read_text())["screenPreferences"], {
+            "wallpaper": [], "notifications": ["DP-3"], "toast": ["DP-2"],
+        })
+
     def test_invalid_session_does_not_modify_settings(self):
         self.seed()
         self.session.write_text("{invalid")

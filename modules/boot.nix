@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  coplandGrubTheme = import ./boot/copland/grub-theme.nix {inherit pkgs;};
+in {
+  imports = [./boot/copland];
+
   boot = {
     loader = {
       systemd-boot.enable =
@@ -18,8 +22,8 @@
         configurationLimit =
           10;
 
-        theme =
-          pkgs.nixos-grub2-theme;
+        theme = coplandGrubTheme;
+        splashImage = "${coplandGrubTheme}/background.png";
       };
       timeout =
         5;
