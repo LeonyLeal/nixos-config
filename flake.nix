@@ -16,6 +16,12 @@
 
     dms.url = "github:AvengeMedia/DankMaterialShell/v1.6.2";
 
+    # Snap support is provided separately from nixpkgs.
+    nix-snapd = {
+      url = "github:nix-community/nix-snapd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     dms-docker-manager = {
       url = "github:LuckShiba/DmsDockerManager";
       flake = false;
@@ -46,6 +52,7 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
+    nix-snapd,
     home-manager,
     dms,
     dank-greeter,
@@ -79,6 +86,8 @@
 
       modules = [
         ./configuration.nix
+
+        nix-snapd.nixosModules.default
 
         dank-greeter.nixosModules.default
 

@@ -60,6 +60,10 @@ in {
   virtualisation.docker.enable =
     true;
 
+  # Required for Snapcraft CLI, which is distributed as a classic snap.
+  services.snap.enable =
+    true;
+
   environment.systemPackages = with pkgs; [
     vscode
 
